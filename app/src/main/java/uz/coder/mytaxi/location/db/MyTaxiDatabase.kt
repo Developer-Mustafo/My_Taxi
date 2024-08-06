@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import uz.coder.mytaxi.location.models.TaxiDbModel
+import uz.coder.mytaxi.models.TaxiDbModel
 
-@Database(entities = [TaxiDbModel::class], version = 1)
+@Database(entities = [TaxiDbModel::class], version = 1, exportSchema = false)
 abstract class MyTaxiDatabase:RoomDatabase() {
     abstract fun taxiDao(): TaxiDao
     companion object{

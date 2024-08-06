@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import uz.coder.mytaxi.location.models.TaxiDbModel
+import uz.coder.mytaxi.models.TaxiDbModel
 
 @Dao
 interface TaxiDao {
@@ -13,6 +13,6 @@ interface TaxiDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(taxi: TaxiDbModel)
 
-    @Query("SELECT * FROM taxi order by id desc limit 1")
+    @Query("SELECT max(id) as id, longitude, altitude, latitude FROM taxi")
     fun getLastLocation(): Flow<TaxiDbModel>
 }
