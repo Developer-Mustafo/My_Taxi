@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -16,10 +17,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import uz.coder.mytaxi.R
 import uz.coder.mytaxi.location.DefaultLocationClient
 import uz.coder.mytaxi.location.LocationClient
+import uz.coder.mytaxi.location.db.MyTaxiDatabase
+import uz.coder.mytaxi.location.models.TaxiDbModel
 import uz.coder.mytaxi.todo.CHANNEL_ID
 import uz.coder.mytaxi.todo.ID
 
@@ -40,19 +42,19 @@ class LocationService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val interval = 2000L
+        val taxiDao = MyTaxiDatabase.getInstance(applicationContext).taxiDao()
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(this.getString(R.string.app_name))
             .setContentText(this.getString(R.string.gettingLocation))
             .setSmallIcon(android.R.drawable.ic_dialog_map)
-            .setOngoing(true)
         val manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         client.getLocationUpdates(interval)
             .catch { e-> e.printStackTrace() }
             .onEach { location->
                 val longitude = location.longitude
                 val latitude = location.latitude
-                val altitude = location.altitude
-                Log.d("TAG", "onStartCommand: $longitude,  $latitude, $altitude")
+                delay(interval)
+                taxiDao.insert(TaxiDbModel(latitude, longitude))
                 manager.notify(ID, notification.build())
             }
             .launchIn(scope)
