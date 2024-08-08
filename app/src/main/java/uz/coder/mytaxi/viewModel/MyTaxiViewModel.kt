@@ -22,10 +22,4 @@ class MyTaxiViewModel(private val application: Application):AndroidViewModel(app
         }
         return flow
     }
-
-    fun list(): List<BottomItem> {
-        return listOf(BottomItem(R.drawable.switch_button, application.getString(R.string.rate), application.getString(R.string.six_eight), R.drawable.right),
-            BottomItem(R.drawable.rectangle_stack, application.getString(R.string.orders), application.getString(R.string.zero), R.drawable.right),
-            BottomItem(R.drawable.rocket, application.getString(R.string.bordur), "", R.drawable.right))
-    }
 }
