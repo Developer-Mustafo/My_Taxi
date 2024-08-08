@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.LocationServices
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,16 +18,21 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import uz.coder.mytaxi.CHANNEL_ID
+import uz.coder.mytaxi.ID
 import uz.coder.mytaxi.R
 import uz.coder.mytaxi.data.location.DefaultLocationClient
 import uz.coder.mytaxi.data.location.LocationClient
 import uz.coder.mytaxi.domain.model.Taxi
-import uz.coder.mytaxi.data.TaxiRepositoryImpl
 import uz.coder.mytaxi.domain.useCase.AddTaxiUseCase
-import uz.coder.mytaxi.CHANNEL_ID
-import uz.coder.mytaxi.ID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LocationService: Service() {
+
+    @Inject
+    lateinit var addTaxiUseCase: AddTaxiUseCase
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var client: LocationClient
     override fun onBind(intent: Intent?): IBinder? {
@@ -44,8 +50,6 @@ class LocationService: Service() {
     @SuppressLint("ForegroundServiceType")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val interval = 1000L
-        val repo = TaxiRepositoryImpl(application)
-        val addTaxiUseCase = AddTaxiUseCase(repo)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(this.getString(R.string.app_name))
             .setContentText(this.getString(R.string.gettingLocation))

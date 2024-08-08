@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.ui
+package uz.coder.mytaxi.presentation
 
 import android.os.Build
 import android.os.Bundle
@@ -40,16 +40,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mapbox.mapboxsdk.geometry.LatLng
+import dagger.hilt.android.AndroidEntryPoint
 import org.ramani.compose.CameraPosition
 import org.ramani.compose.LocationRequestProperties
 import org.ramani.compose.LocationStyling
 import org.ramani.compose.MapLibre
 import uz.coder.mytaxi.BuildConfig
 import uz.coder.mytaxi.R
-import uz.coder.mytaxi.ui.viewModel.MyTaxiViewModel
+import uz.coder.mytaxi.presentation.viewModel.TaxiViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +76,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MapScreen(modifier: Modifier = Modifier, mapStyleUrl:String) {
-        val viewModel = viewModel<MyTaxiViewModel>()
+        val viewModel = hiltViewModel<TaxiViewModel>()
         viewModel.getTaxi()
         val modelState by viewModel.last.collectAsState()
         var checked by remember { mutableStateOf(false) }

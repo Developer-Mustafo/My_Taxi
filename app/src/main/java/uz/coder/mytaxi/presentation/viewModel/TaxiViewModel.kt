@@ -1,20 +1,17 @@
-package uz.coder.mytaxi.ui.viewModel
+package uz.coder.mytaxi.presentation.viewModel
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uz.coder.mytaxi.domain.model.Taxi
-import uz.coder.mytaxi.data.TaxiRepositoryImpl
 import uz.coder.mytaxi.domain.useCase.GetLastTaxiUseCase
+import javax.inject.Inject
 
-class MyTaxiViewModel(application: Application):AndroidViewModel(application) {
-    private val repo = TaxiRepositoryImpl(application)
-    private val getLastTaxiUseCase = GetLastTaxiUseCase(repo)
+@HiltViewModel
+class TaxiViewModel @Inject constructor(private val getLastTaxiUseCase:GetLastTaxiUseCase):ViewModel() {
     private val _last = MutableStateFlow(Taxi(60.6101185, 41.5755407, 70.69999694824219))
     val last = _last.asStateFlow()
     init {

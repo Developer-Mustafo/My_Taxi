@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.ui.theme
+package uz.coder.mytaxi.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

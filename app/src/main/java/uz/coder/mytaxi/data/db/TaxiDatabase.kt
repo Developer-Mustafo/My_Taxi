@@ -1,6 +1,5 @@
 package uz.coder.mytaxi.data.db
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -13,7 +12,7 @@ abstract class TaxiDatabase:RoomDatabase() {
         private const val DATABASE_NAME = "taxi_db"
         private val LOCK = Any()
         private var db: TaxiDatabase? = null
-        fun getInstance(application: Application): TaxiDatabase {
+        fun getInstance(context: Context): TaxiDatabase {
             db?.let {
                 return it
             }
@@ -23,10 +22,10 @@ abstract class TaxiDatabase:RoomDatabase() {
                 }
             }
             val instance = Room.databaseBuilder(
-                application,
+                context,
                 TaxiDatabase::class.java,
                 DATABASE_NAME
-            ).build()
+            ).fallbackToDestructiveMigration().build()
             db = instance
             return instance
         }

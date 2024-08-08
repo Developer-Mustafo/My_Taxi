@@ -1,6 +1,8 @@
 package uz.coder.mytaxi.domain.model
 
-data class Taxi(
+import javax.inject.Inject
+
+data class Taxi @Inject constructor(
     val latitude: Double,
     val longitude: Double,
     val altitude:Double,

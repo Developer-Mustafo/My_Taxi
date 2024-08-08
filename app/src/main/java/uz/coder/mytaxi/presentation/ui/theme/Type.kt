@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.ui.theme
+package uz.coder.mytaxi.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
