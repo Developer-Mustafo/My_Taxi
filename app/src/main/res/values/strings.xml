@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">My Taxi</string>
     <string name="gettingLocation">Joylashuv olinmoqda</string>
+    <string name="rate">Tarif</string>
+    <string name="six_eight">6/8</string>
+    <string name="orders">Buyurtmalar</string>
+    <string name="zero">0</string>
+    <string name="bordur">Bordur</string>
+    <string name="busy">Band</string>
+    <string name="active">Faol</string>
 </resources>

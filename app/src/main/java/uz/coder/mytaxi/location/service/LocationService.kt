@@ -55,7 +55,7 @@ class LocationService: Service() {
                 val longitude = location.longitude
                 val latitude = location.latitude
                 val altitude = location.altitude
-                delay(interval+2000L)
+                delay(interval+9000L)
                 Log.d("TAG", "onStartCommand: $longitude $latitude $altitude")
                 repo.addTaxi(Taxi(latitude, longitude, altitude))
                 manager.notify(ID, notification.build())
