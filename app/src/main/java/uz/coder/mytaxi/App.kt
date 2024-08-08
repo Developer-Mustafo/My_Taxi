@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.todo
+package uz.coder.mytaxi
 
 import android.app.Application
 import android.app.NotificationChannel
@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.content.ContextCompat
-import uz.coder.mytaxi.location.service.LocationService
+import uz.coder.mytaxi.data.service.LocationService
 
 class App:Application() {
     override fun onCreate() {

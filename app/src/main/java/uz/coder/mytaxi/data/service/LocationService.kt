@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.location.service
+package uz.coder.mytaxi.data.service
 
 import android.annotation.SuppressLint
 import android.app.NotificationManager
@@ -18,16 +18,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uz.coder.mytaxi.R
-import uz.coder.mytaxi.location.DefaultLocationClient
-import uz.coder.mytaxi.location.LocationClient
-import uz.coder.mytaxi.models.Taxi
-import uz.coder.mytaxi.repository.TaxiRepositoryImpl
-import uz.coder.mytaxi.todo.CHANNEL_ID
-import uz.coder.mytaxi.todo.ID
+import uz.coder.mytaxi.data.location.DefaultLocationClient
+import uz.coder.mytaxi.data.location.LocationClient
+import uz.coder.mytaxi.domain.model.Taxi
+import uz.coder.mytaxi.data.TaxiRepositoryImpl
+import uz.coder.mytaxi.domain.useCase.AddTaxiUseCase
+import uz.coder.mytaxi.CHANNEL_ID
+import uz.coder.mytaxi.ID
 
 class LocationService: Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private lateinit var client:LocationClient
+    private lateinit var client: LocationClient
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -44,6 +45,7 @@ class LocationService: Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val interval = 1000L
         val repo = TaxiRepositoryImpl(application)
+        val addTaxiUseCase = AddTaxiUseCase(repo)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(this.getString(R.string.app_name))
             .setContentText(this.getString(R.string.gettingLocation))
@@ -57,7 +59,7 @@ class LocationService: Service() {
                 val altitude = location.altitude
                 delay(interval+9000L)
                 Log.d("TAG", "onStartCommand: $longitude $latitude $altitude")
-                repo.addTaxi(Taxi(latitude, longitude, altitude))
+                addTaxiUseCase(Taxi(latitude, longitude, altitude))
                 manager.notify(ID, notification.build())
             }
             .launchIn(scope)

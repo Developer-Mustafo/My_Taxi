@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.todo
+package uz.coder.mytaxi
 
 import android.Manifest
 import android.content.Context

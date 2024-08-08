@@ -1,7 +1,7 @@
-package uz.coder.mytaxi.repository
+package uz.coder.mytaxi.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import uz.coder.mytaxi.models.Taxi
+import uz.coder.mytaxi.domain.model.Taxi
 
 interface TaxiRepository {
     suspend fun addTaxi(taxi: Taxi)

@@ -1,4 +1,4 @@
-package uz.coder.mytaxi
+package uz.coder.mytaxi.ui
 
 import android.os.Build
 import android.os.Bundle
@@ -21,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -47,7 +46,9 @@ import org.ramani.compose.CameraPosition
 import org.ramani.compose.LocationRequestProperties
 import org.ramani.compose.LocationStyling
 import org.ramani.compose.MapLibre
-import uz.coder.mytaxi.viewModel.MyTaxiViewModel
+import uz.coder.mytaxi.BuildConfig
+import uz.coder.mytaxi.R
+import uz.coder.mytaxi.ui.viewModel.MyTaxiViewModel
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -71,11 +72,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MapScreen(modifier: Modifier = Modifier, mapStyleUrl:String) {
         val viewModel = viewModel<MyTaxiViewModel>()
-        val modelState by viewModel.getTaxi().collectAsState()
+        viewModel.getTaxi()
+        val modelState by viewModel.last.collectAsState()
         var checked by remember { mutableStateOf(false) }
         Box(modifier = modifier.fillMaxSize()) {
             MapLibre(

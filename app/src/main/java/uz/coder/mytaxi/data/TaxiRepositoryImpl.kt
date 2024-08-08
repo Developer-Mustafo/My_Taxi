@@ -1,13 +1,14 @@
-package uz.coder.mytaxi.repository
+package uz.coder.mytaxi.data
 
 import android.app.Application
 import kotlinx.coroutines.flow.channelFlow
-import uz.coder.mytaxi.location.db.MyTaxiDatabase
-import uz.coder.mytaxi.models.Taxi
-import uz.coder.mytaxi.models.TaxiDbModel
+import uz.coder.mytaxi.data.db.TaxiDatabase
+import uz.coder.mytaxi.domain.model.Taxi
+import uz.coder.mytaxi.data.db.TaxiDbModel
+import uz.coder.mytaxi.domain.repository.TaxiRepository
 
-class TaxiRepositoryImpl(application: Application):TaxiRepository {
-    private val db = MyTaxiDatabase.getInstance(application).taxiDao()
+class TaxiRepositoryImpl(application: Application): TaxiRepository {
+    private val db = TaxiDatabase.getInstance(application).taxiDao()
     override suspend fun addTaxi(taxi: Taxi) {
         db.insert(TaxiDbModel(taxi.latitude,taxi.longitude, taxi.altitude, taxi.id))
     }

@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.models
+package uz.coder.mytaxi.domain.model
 
 data class Taxi(
     val latitude: Double,

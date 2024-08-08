@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.location
+package uz.coder.mytaxi.data.location
 
 import android.location.Location
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package uz.coder.mytaxi.location
+package uz.coder.mytaxi.data.location
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,13 +11,13 @@ import com.google.android.gms.location.LocationResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
-import uz.coder.mytaxi.todo.hasLocationPermission
+import uz.coder.mytaxi.hasLocationPermission
 
 @Suppress("DEPRECATION")
 data class DefaultLocationClient(
     private val context: Context,
     private val client:FusedLocationProviderClient
-):LocationClient {
+): LocationClient {
     @SuppressLint("MissingPermission")
     override fun getLocationUpdates(interval: Long) = callbackFlow {
         if (!context.hasLocationPermission()) {

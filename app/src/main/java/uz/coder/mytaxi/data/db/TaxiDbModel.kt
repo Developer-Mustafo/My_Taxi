@@ -1,9 +1,8 @@
-package uz.coder.mytaxi.models
+package uz.coder.mytaxi.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
-import uz.coder.mytaxi.models.Taxi.Companion.UNDEFINE_ID
+import uz.coder.mytaxi.domain.model.Taxi.Companion.UNDEFINE_ID
 
 @Entity("taxi")
 data class TaxiDbModel(
